@@ -1,40 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 /* https://github.com/IBE99/iTerm2-Color-Schemes/blob/master/screenshots/espresso_libre.png */
 :root {
-  --background:#201B19;
+  --background:#282525;
   --foreground:#DBDED8;
   --background-2:#000000;
   --highlight:#D6392E;
+  --header-height: 2.6em;
 }
 body {
   background: var(--background);
+  font-size: 16px;
 }
 h1, h2, h3 {
   color: var(--foreground);
+  font-size: var(--header-height);
+  font-family: 'Bangers', cursive;
+}
+header ul {
+  margin: 0;
+}
+header img {
+  height: var(--header-height);
+}
+header div h1 {
+  margin: 0;
+  letter-spacing: .08em;
+  font-weight: 400;
+  text-shadow: 5px 8px 3px black;
+}
+header div p {
+  margin-top: 0.3em;
+  text-shadow: -1px -1px 7px black, -1px 1px 7px black, 1px -1px 7px black, 1px 1px 7px black, 0 0 9px #282525;
 }
 header {
-  padding: 10px;
+  padding: 1em 20px;
+  overflow: auto;
 }
-header > div > * {
-  margin: 0.4em 0;
+header nav {
+  position: absolute;
+  right: 0;
 }
 header p {
   color: var(--highlight);
+  font-family: 'helvetica-neu', sans-serif;
+  font-weight: 400;
+  font-size: 1.3em;
 }
 header ul {
   list-style-type: none;
-  padding: none;
+  padding: 0 10px;
 }
 header ul::after {
   clear: both;
 }
 header li {
-  float: left;
+  float: right;
   margin: 0 10px;
-  font-size: 1.7em;
 }
 header > * {
   float: left;
 }
 header::after {
   clear: both;
+}
+main {
+  margin: 1em 17px;
+  background: var(--background-2);
+  min-height: 5em;
 }
