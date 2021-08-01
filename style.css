@@ -1,0 +1,40 @@
+/* https://github.com/IBE99/iTerm2-Color-Schemes/blob/master/screenshots/espresso_libre.png */
+:root {
+  --background:#201B19;
+  --foreground:#DBDED8;
+  --background-2:#000000;
+  --highlight:#D6392E;
+}
+body {
+  background: var(--background);
+}
+h1, h2, h3 {
+  color: var(--foreground);
+}
+header {
+  padding: 10px;
+}
+header > div > * {
+  margin: 0.4em 0;
+}
+header p {
+  color: var(--highlight);
+}
+header ul {
+  list-style-type: none;
+  padding: none;
+}
+header ul::after {
+  clear: both;
+}
+header li {
+  float: left;
+  margin: 0 10px;
+  font-size: 1.7em;
+}
+header > * {
+  float: left;
+}
+header::after {
+  clear: both;
+}
