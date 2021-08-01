@@ -19,9 +19,20 @@ h1, h2, h3 {
 header ul {
   margin: 0;
 }
-header img {
-  height: var(--header-height);
+
+#search, #recommendations {
+ background-size: 100%;
+ height: var(--header-height);
+ width: var(--header-height);
+ display: block;
 }
+#search {
+  background-image: url("./assets/icons/search-line.png");
+}
+#recommendations {
+  background-image: url(/assets/icons/star-fill.png);
+}
+
 header div h1 {
   margin: 0;
   letter-spacing: .08em;
