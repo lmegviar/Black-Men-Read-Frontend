@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-/* https://github.com/IBE99/iTerm2-Color-Schemes/blob/master/screenshots/espresso_libre.png */
 :root {
   --background:#282525;
   --foreground:#DBDED8;
@@ -8,8 +7,11 @@
   --header-height: 2.6em;
 }
 body {
+  display: block;
   background: var(--background);
-  font-size: 16px;
+  font-size: .8em;
+  max-width: 600px;
+  min-width: 320px;
 }
 h1, h2, h3 {
   color: var(--foreground);
@@ -19,8 +21,7 @@ h1, h2, h3 {
 header ul {
   margin: 0;
 }
-
-#search, #recommendations {
+#search, #recommendations, #thumb-up, #thumb-down {
  background-size: 100%;
  height: var(--header-height);
  width: var(--header-height);
@@ -32,30 +33,30 @@ header ul {
 #recommendations {
   background-image: url(/assets/icons/star-fill.png);
 }
-
 header div h1 {
   margin: 0;
   letter-spacing: .08em;
   font-weight: 400;
   text-shadow: 5px 8px 3px black;
 }
-header div p {
-  margin-top: 0.3em;
-  text-shadow: -1px -1px 7px black, -1px 1px 7px black, 1px -1px 7px black, 1px 1px 7px black, 0 0 9px #282525;
+header div {
+    width: calc(100% - 12em);
 }
 header {
-  padding: 1em 20px;
+  padding: 1em 0 0 20px;
   overflow: auto;
 }
 header nav {
-  position: absolute;
-  right: 0;
+  display: inline-block;
+  float: right;
 }
 header p {
   color: var(--highlight);
   font-family: 'helvetica-neu', sans-serif;
   font-weight: 400;
-  font-size: 1.3em;
+  font-size: 1em;
+   margin: 0.3em 0;
+  text-shadow: -1px -1px 1px var(--background-2), -1px 1px 1px var(--background-2), 1px -1px 1px var(--background-2), 1px 1px 1px var(--background-2), 0 0 1px var(--background);
 }
 header ul {
   list-style-type: none;
@@ -75,7 +76,72 @@ header::after {
   clear: both;
 }
 main {
-  margin: 1em 17px;
+  /* margin: 1em 17px; */
+  margin-top: 1em;
   background: var(--background-2);
   min-height: 5em;
+}
+/* Survey */
+#survey {
+  padding: .8em;
+}
+#survey h2 {
+  text-align: center;
+  background-color: var(--foreground);
+  color: var(--background);
+  margin: 0;
+  padding: .8em;
+  border-radius: 20px;
+  font-family: 'helvetica-neu', sans-serif;  
+  font-weight: 400;
+  font-size: 1em;
+  width: fit-content;
+}
+#option-image {
+  text-align: center;
+  padding-top: 20px;
+}
+#option-image img {
+  width: 100%;
+}
+#option-image a {
+  padding: .5em;
+  display: block;
+  overflow: hidden;
+  color: var(--foreground);
+  font-size: .8em;
+  font-family: 'helvetica-neu', sans-serif;
+  text-decoration: none;
+}
+#option-image a:visited {
+  color: var(--highlight);
+}
+#option-toggle {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  overflow: auto;
+}
+#option-toggle * {
+  display: block;
+}
+#option-toggle > a {
+  display: inline-block;
+}
+#option-toggle::after {
+  clear: both;
+}
+#survey label.switch {
+  text-align: center;
+  width: 50%;
+}
+#thumb-down, #thumb-up {
+  display: inline-block;
+}
+#thumb-down {
+  background-image: url("./assets/icons/thumb-down-fill.png");
+  float: left;
+}
+#thumb-up {
+  background-image: url("./assets/icons/thumb-up-fill.png");
 }

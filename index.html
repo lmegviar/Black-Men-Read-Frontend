@@ -1,7 +1,5 @@
 <!-- Students' Mockup: https://www.youtube.com/watch?v=2BcYLUN_4dA -->
-
 <!-- Icons from https://remixicon.com/ -->
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,6 +8,7 @@
     <title>Black Book</title>
     <link href="normalize.css" rel="stylesheet" type="text/css" />
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="toggle.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <script src="script.js"></script>
@@ -32,6 +31,22 @@
       </nav>
     </header>
     <main>
+      <section id="survey">
+        <h2>Let's find something new.<br>Are you into comics?</h2>
+        <div id="option-image">
+          <!-- TO DO - use real image -->
+          <img src="assets/images/test_comic.jpg"/>
+          <a href="https://www.comics.org/issue/2150916/cover/4/">Source: Grand Comic Database</a>
+        </div>
+        <div id="option-toggle">
+          <a id="thumb-down"><a/>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+          <a id="thumb-up"></a>
+        </div>
+      </section>
     </main>
   </body>
 </html>
