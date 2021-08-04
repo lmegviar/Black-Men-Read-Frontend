@@ -5,13 +5,15 @@
   --background-2:#000000;
   --highlight:#D6392E;
   --header-height: 2.6em;
+  --max-width: 600px;
 }
 body {
   display: block;
   background: var(--background);
   font-size: .8em;
-  max-width: 600px;
+  max-width: var(--max-width);
   min-width: 320px;
+  margin: auto;
 }
 h1, h2, h3 {
   color: var(--foreground);
@@ -82,28 +84,54 @@ main {
   min-height: 5em;
 }
 /* Survey */
-#survey {
+.survey {
   padding: .8em;
-}
-#survey h2 {
   text-align: center;
+}
+.survey h2 {
+  display: inline-block;
   background-color: var(--foreground);
   color: var(--background);
-  margin: 0;
   padding: .8em;
   border-radius: 20px;
   font-family: 'helvetica-neu', sans-serif;  
   font-weight: 400;
   font-size: 1em;
   width: fit-content;
+  padding: 1em 2em;
+  margin-bottom: 1.5em;
 }
-#option-image {
-  text-align: center;
-  padding-top: 20px;
+#survey-issue .option {
+  display: flex;
+  justify-content: space-between;
+}
+#survey-issue #option-details { 
+  flex: 0 0 40%; 
+}
+#survey-issue #option-details p {
+  color: white;
+  font-family: 'helvetica-neu', sans-serif;
+  font-weight: 400;
+  font-size: 1em;
+  padding: 0 1em;
 }
 #option-image img {
+  min-width: 150px;
   width: 100%;
 }
+#survey-issue #option-image {
+  text-align: left;
+  flex: 0 0 60%; 
+}
+#option-description {
+  text-align: left;
+  /* overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical; */
+}
+/* Survey Selection Bar */
 #option-image a {
   padding: .5em;
   display: block;
@@ -112,15 +140,22 @@ main {
   font-size: .8em;
   font-family: 'helvetica-neu', sans-serif;
   text-decoration: none;
+  text-align: center;
 }
 #option-image a:visited {
   color: var(--highlight);
 }
-#option-toggle {
-  position: fixed;
+#option-bar {
   bottom: 0;
   width: 100%;
-  overflow: auto;
+  position: fixed;
+  max-width: var(--max-width);
+  padding-right: .8em;
+}
+#option-toggle {
+  padding-right: 1.6em;
+  display: flex;
+  justify-content: space-between;
 }
 #option-toggle * {
   display: block;
@@ -131,17 +166,14 @@ main {
 #option-toggle::after {
   clear: both;
 }
-#survey label.switch {
-  text-align: center;
-  width: 50%;
-}
-#thumb-down, #thumb-up {
-  display: inline-block;
-}
 #thumb-down {
   background-image: url("./assets/icons/thumb-down-fill.png");
-  float: left;
 }
 #thumb-up {
   background-image: url("./assets/icons/thumb-up-fill.png");
 }
+
+
+/* 
+Idea for swipe style
+https://dribbble.com/shots/7164639-Interactive-restaurant-recommendations-app */
