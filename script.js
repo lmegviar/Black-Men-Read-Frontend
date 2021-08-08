@@ -20,7 +20,7 @@ the factory wil be called by some other logic, in this case where the applicatio
 
 */
 
-const issueDetailsModel = [
+var issueDetailsModel = [
   {
     name: "title",
     type: String
@@ -79,21 +79,24 @@ const issueDetailsModel = [
   }
 ];
 
-const issueRequired = [
+var issueRequired = [
   "title",
   "coverURL"
 ];
 
 // set up a global namespace for the library
-const public = Object.create(null);
+var public = Object.create(null);
 // yes we could have collisions
-window.bmr = public;
+Object.defineProperty(window, "bmr", {
+  value: public
+});
 
 /**
  * Iterates through the issueDetailsModel, basically forEach
  */
 function eachIssueModel (fn) {
   for (var ndx = 0; ndx < issueDetailsModel.length; ndx++) {
+    // this should be made read-only
     fn(issueDetailsModel[ndx]);
   }
 }
@@ -135,18 +138,31 @@ function ComicBookIssue (details) {
 // define instance methods of comic book issues
 Object.defineProperties(ComicBookIssue.prototype, {
   render: {
-    value: function () {
-      // return a DOM node. this could eventually be a custom element.
-      var issue = document.createElement("div");
-      // create the structure of the component
-      issue.innerHTML = "                                  \
-                                                           \
-        <div class=\"issue\">                              \
-        </div>                                             \
-                                                           \
+    /**
+     * returns a DOM node
+     */
+    value: function render () {
+      // get an accessor for props set at instantiation time
+      var props = this.props;
+      // inject the props into a template for the component
+      var template = "\
+        <div class=\"issue\">\
+          <header>\
+            <span class=\"title\">" + props.title + "</span>\
+          </header>\
+        </div>\
       ";
-      // return the DOM node
-      return issue;
+      // this could eventually be a custom element,
+      // with the template string handled as a real HTML <template>
+      return (function (el, html = "") {
+        // sanitize the html input
+        el.innerHTML = html;
+        // return the element
+        return el;
+      })(
+        document.createElement("div"),
+        template
+      );
     }
   }
 });

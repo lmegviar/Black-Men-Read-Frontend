@@ -11,10 +11,10 @@
     <link href="toggle.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
+
     <header>
       <div>
         <h1>Black Book</h1>
-        <p>Learn. Grow. Build.</p>
       </div>
       <nav>
         <ul>
@@ -29,14 +29,13 @@
         </ul>
       </nav>
     </header>
-    <main>
-  
 
+    <main>
+<!-- 
       <section class="survey" id="survey-issue">
         <h2>Would you read this story?</h2>
         <div class="option">
           <div id="option-image">
-            <!-- TO DO - use real image -->
             <img src="assets/images/test_comic.jpg"/>
           </div>
           <div id="option-details">
@@ -67,7 +66,6 @@
       <section class="survey" id="survey-intro">
         <h2>Need help finding something new to read?</h2>
         <div id="option-image">
-          <!-- TO DO - use real image -->
           <img src="assets/images/test_comic.jpg"/>
           <a href="https://www.comics.org/issue/2150916/cover/4/">Source: Grand Comic Database</a>
         </div>
@@ -82,16 +80,20 @@
           </div>
         </div>
       </section>
-    </main>
-    <div id="issues"></div>
+-->
+  
+  <div id="issues"></div>
+
+  </main>
+
   <script src="script.js"></script>
   <script>
   (function () {
-    // the library should be initialized as soon as the script has finished loading.
     // describe a comic book issue
     var details = {
       title: "this is a test",
-      coverURL: "this is a URL"
+      coverURL: "this is a URL",
+      publishedDate: "2018"
     }
     // create a new comic book issue entity
     var issue = window.bmr.create(details);
