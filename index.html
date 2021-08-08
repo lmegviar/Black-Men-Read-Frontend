@@ -11,7 +11,6 @@
     <link href="toggle.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <script src="script.js"></script>
     <header>
       <div>
         <h1>Black Book</h1>
@@ -41,10 +40,13 @@
             <img src="assets/images/test_comic.jpg"/>
           </div>
           <div id="option-details">
-            <p>Miles Morales Vol. 2</p>
-            <p>Bring On The Bad Guys</p>
+            <p>Issue Title</p>
+            <p>Issue Subtitle</p>
             <p>Author</p>
-            <p id="option-description">Collects Miles Morales: Spider-Man (2018) 7-10 and material from Free Comic Book Day 2019 Spider-Man/Venom #1. It's time for Miles Morales to slow down and take stock! What do the young web-slinger's parents and friends, particularly Bombshell, think of all of that's happened? Miles may never get to learn the answers--he's about to be captured, tested and observed like a bug under glass by an unknown assailant! Miles will need help to escape this one. Good thing his dad's a former Agent of S.H.I.E.L.D.! And there's no price Jefferson Davis wouldn't pay to get his son back. But the decisions this father-and-son duo make may come back to haunt them when one of the most formidable foes that Miles has ever faced returns! Prepare for a mystery dating back all the way to Miles' first appearance!</p>
+            <p>Publication Date</p>
+            <p>Page Count</p>
+            <p id="option-description">
+              Collects Miles Morales: Spider-Man (2018) 7-10 and material from Free Comic Book Day 2019 Spider-Man/Venom #1. It's time for Miles Morales to slow down and take stock! What do the young web-slinger's parents and friends, particularly Bombshell, think of all of that's happened? Miles may never get to learn the answers--he's about to be captured, tested and observed like a bug under glass by an unknown assailant! Miles will need help to escape this one. Good thing his dad's a former Agent of S.H.I.E.L.D.! And there's no price Jefferson Davis wouldn't pay to get his son back. But the decisions this father-and-son duo make may come back to haunt them when one of the most formidable foes that Miles has ever faced returns! Prepare for a mystery dating back all the way to Miles' first appearance!</p>
             <a href="https://www.comics.org/issue/2150916/cover/4/">Image Source: Grand Comic Database</a>
           </div>
         </div>
@@ -80,9 +82,26 @@
           </div>
         </div>
       </section>
-
-
-
     </main>
+    <div id="issues"></div>
+  <script src="script.js"></script>
+  <script>
+  (function () {
+    // the library should be initialized as soon as the script has finished loading.
+    // describe a comic book issue
+    var details = {
+      title: "this is a test",
+      coverURL: "this is a URL"
+    }
+    // create a new comic book issue entity
+    var issue = window.bmr.create(details);
+    // render the HTML "component"
+    var issueNode = issue.render();
+    // identify the container for issues
+    var container = document.getElementById("issues");
+    // append this issue to the DOM
+    container.appendChild(issueNode);
+  })();
+  </script>
   </body>
 </html>
