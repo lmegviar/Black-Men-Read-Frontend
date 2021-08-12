@@ -2,24 +2,26 @@
 <!-- Icons from https://remixicon.com/ -->
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Black Book</title>
-    <link href="normalize.css" rel="stylesheet" type="text/css" />
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="toggle.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
 
-    <header>
-      <div>
-        <h1>Black Book</h1>
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <label hidden for="search">"Go to search"</label>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Black Book</title>
+	<link href="normalize.css" rel="stylesheet" type="text/css" />
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link href="toggle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+	<header>
+		<div>
+			<h1>Black Book</h1>
+		</div>
+		<nav>
+			<ul>
+				<li>
+					<label hidden for="search">"Go to search"</label>
             <a id="search"></a>
           </li>
           <li>
@@ -31,79 +33,42 @@
     </header>
 
     <main>
-<!-- 
-      <section class="survey" id="survey-issue">
-        <h2>Would you read this story?</h2>
-        <div class="option">
-          <div id="option-image">
-            <img src="assets/images/test_comic.jpg"/>
-          </div>
-          <div id="option-details">
-            <p>Issue Title</p>
-            <p>Issue Subtitle</p>
-            <p>Author</p>
-            <p>Publication Date</p>
-            <p>Page Count</p>
-            <p id="option-description">
-              Collects Miles Morales: Spider-Man (2018) 7-10 and material from Free Comic Book Day 2019 Spider-Man/Venom #1. It's time for Miles Morales to slow down and take stock! What do the young web-slinger's parents and friends, particularly Bombshell, think of all of that's happened? Miles may never get to learn the answers--he's about to be captured, tested and observed like a bug under glass by an unknown assailant! Miles will need help to escape this one. Good thing his dad's a former Agent of S.H.I.E.L.D.! And there's no price Jefferson Davis wouldn't pay to get his son back. But the decisions this father-and-son duo make may come back to haunt them when one of the most formidable foes that Miles has ever faced returns! Prepare for a mystery dating back all the way to Miles' first appearance!</p>
-            <a href="https://www.comics.org/issue/2150916/cover/4/">Image Source: Grand Comic Database</a>
-          </div>
-        </div>
-        <div id="option-bar">
-          <div id="option-toggle">
-            <a id="thumb-down"><a/>
-            <label class="switch">
-              <input type="checkbox">
-              <span class="slider"></span>
-            </label>
-            <a id="thumb-up"></a>
-          </div>
-        </div>
-      </section>
+      <ul id="issues"></ul>
+    </main>
 
-
-
-      <section class="survey" id="survey-intro">
-        <h2>Need help finding something new to read?</h2>
-        <div id="option-image">
-          <img src="assets/images/test_comic.jpg"/>
-          <a href="https://www.comics.org/issue/2150916/cover/4/">Source: Grand Comic Database</a>
-        </div>
-        <div id="option-bar">
-          <div id="option-toggle">
-            <a id="thumb-down"><a/>
-            <label class="switch">
-              <input type="checkbox">
-              <span class="slider"></span>
-            </label>
-            <a id="thumb-up"></a>
-          </div>
-        </div>
-      </section>
--->
-  
-  <div id="issues"></div>
-
-  </main>
-
-  <script src="script.js"></script>
-  <script>
-  (function () {
-    // describe a comic book issue
-    var details = {
-      title: "this is a test",
-      coverURL: "this is a URL",
-      publishedDate: "2018"
-    }
-    // create a new comic book issue entity
-    var issue = window.bmr.create(details);
-    // render the HTML "component"
-    var issueNode = issue.render();
-    // identify the container for issues
-    var container = document.getElementById("issues");
-    // append this issue to the DOM
-    container.appendChild(issueNode);
-  })();
-  </script>
+    <script src="script.js"></script>
+    <script>
+      (function () {
+        // describe a comic book issue,
+        // this would be parsed JSON
+        var details = {
+          title: "",
+          subtitle: "",
+          description: "",
+          snippet: "",
+          publishedDate: "",
+          publisher: "",
+          mature: "",
+          language: "",
+          isbn: "",
+          pageCount: 0,
+          thumbnailURL: "",
+          coverURL: ""
+        };
+        // create a new comic book issue entity
+        var issue = window.bmr.create(details);
+        // render the HTML for mobile devices
+        // other options: "thumbnail"
+        // eventually: "large" or "desktop" templates
+        var node = issue.render("mobile");
+        // the issue element is wrapped as a list item
+        var item = document.createElement("li");
+        // identify the container for issue list items
+        var list = document.getElementById("issues");
+        // append this issue to the DOM
+        item.appendChild(node);
+        list.appendChild(item);
+      })();
+    </script>
   </body>
 </html>

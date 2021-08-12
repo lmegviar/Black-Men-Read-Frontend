@@ -67,7 +67,7 @@ var schema = [
   },
   {
     name: "isbn",
-    type: Number
+    type: String
   },
   {
     name: "pageCount",
@@ -103,7 +103,7 @@ Object.defineProperty(window, "bmr", {
  * @param {string} details.mature - flags issues containing explicit content.
  * @param {string} details.language - the language.
  * @param {string} details.isbn - the isbn code.
- * @param {string} details.pageCount - the number of pages.
+ * @param {number} details.pageCount - the number of pages.
  * @param {string} details.thumbnailURL - the URL for a thumbnail image of the issue.
  * @param {string} details.coverURL - the URL for the issue's cover image.
  */
@@ -131,24 +131,78 @@ function Issue (details) {
   }
 }
 
+// define a templates library for the Issue constructor
+Object.defineProperty(Issue, "templates", {
+  value: {
+    /**
+     * returns the HTML for a thumbs-up/down rating element
+     */
+    rating: function (props) {
+      return "\
+        <div></div>
+      ";
+    },
+    /**
+     * returns the HTML for a thumbnail element
+     */
+    thumbnail: function (props) {
+      return "\
+        <article class=\"thumbnail\">\
+          <img src=\"" + props.thumbnailURL + "\" alt=\"a thumbnail image for " + props.title + "\" \\>\
+        </article>\
+      ";
+    },
+    /**
+     * returns the HTML for a mobile-first comic book issue element
+     */
+    mobile: function (props) {
+      return "\
+        <article class=\"issue\">\
+          <header>\
+            <a class=\"title\">" + props.title + "</a>\
+            <p class=\"subtitle\">" + props.subtitle + "</p>\
+          </header>\
+          <section class=\"cover\">\
+            <img src=\"" + props.coverURL + "\" alt=\"a cover image for " + props.title + "\" \\>\
+          </section>\
+          <section class=\"details\">\
+            <p class=\"description\">" + props.description + "</p>\
+            <p class=\"snippet\">" + props.snippet + "</p>\
+            <p class=\"publishedDate\">" + props.publishedDate + "</p>\
+            <p class=\"publisher\">" + props.publisher + "</p>\
+            <p class=\"mature\">" + props.mature + "</p>\
+            <p class=\"language\">" + props.language + "</p>\
+            <p class=\"isbn\">" + props.isbn + "</p>\
+            <p class=\"pageCount\">" + props.pageCount + "</p>\
+          </section>\
+          <footer>\
+            <a href=\"" + props.coverURL + "\">image source: grand comic database</a>\
+          </footer>\
+        </article>\
+      ";
+    }
+  }
+});
+
 // define instance methods of comic book issues
 Object.defineProperties(Issue.prototype, {
   render: {
     /**
-     * returns a DOM node
+     * returns different DOM nodes.
+     * @param{string} template - one of the following: "mobile", "thumbnail"
      */
-    value: function render () {
+    value: function render (templateName) {
       // get an accessor for props set at instantiation time
       var props = this.props;
       // inject the props into a template for the component
-      var template = "\
-        <div class=\"issue\">\
-          <header>\
-            <span class=\"title\">" + props["title"] + "</span>\
-          </header>\
-        </div>\
-      ";
-      // wrap the retun in an IIFE so references to props can be forgotten
+      try {
+        // get the html template
+        var template = Issue.templates[templateName](props);
+      } catch (exception) {
+        // be descriptive
+        throw new Error("Unknown template: " + templateName + ". Accepted: " + Object.keys(Issue.templates).join(", "));
+      }
+      // wrap the retun in an IIFE so we are isolating the DOM process
       return (function (html = "") {
         // create a DOM node, this could be a custom element in the future
         const el = document.createElement("div");
@@ -161,7 +215,7 @@ Object.defineProperties(Issue.prototype, {
   }
 });
 
-// "export" the factory as a library method named "create"
+// expose the factory as a library method named "create"
 Object.defineProperty(public, "create", {
   value: function (details) {
     return new Issue(details);
