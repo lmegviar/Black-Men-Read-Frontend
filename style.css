@@ -1,3 +1,11 @@
+/* 
+
+Idea for swipe style:
+
+https://dribbble.com/shots/7164639-Interactive-restaurant-recommendations-app
+
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
 :root {
@@ -17,8 +25,14 @@ body {
   min-width: 320px;
   margin: auto;
 }
+/* make it accessible */
+.hidden {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
 
-h1, h2, h3 {
+h1 {
   color: var(--foreground);
   font-size: var(--header-height);
   font-family: 'Bangers', cursive;
@@ -28,7 +42,7 @@ header ul {
   margin: 0;
 }
 
-#search, #recommendations, #thumb-up, #thumb-down {
+#search, #recommendations {
  background-size: 100%;
  height: var(--header-height);
  width: var(--header-height);
@@ -189,14 +203,30 @@ main {
   clear: both;
 }
 
-#thumb-down {
+/* ratings */
+
+article.thumbs-rating form input[type="radio"] {
+  display: ;
+}
+
+.thumbs-up, .thumbs-down {
+ background-size: 100%;
+ height: var(--header-height);
+ width: var(--header-height);
+ display: block;
+}
+
+.thumbs-down {
   background-image: url("./assets/icons/thumb-down-fill.png");
 }
 
-#thumb-up {
+.thumbs-up {
   background-image: url("./assets/icons/thumb-up-fill.png");
 }
 
-/* 
-Idea for swipe style
-https://dribbble.com/shots/7164639-Interactive-restaurant-recommendations-app */
+/* thumbnail */
+
+
+
+/* mobile */
+

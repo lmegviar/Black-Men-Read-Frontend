@@ -31,7 +31,45 @@
         </ul>
       </nav>
     </header>
+<!-- 
+      <section class="survey" id="survey-issue">
 
+        <h2>Would you read this story?</h2>
+
+        ~~ comic book issue ~~
+
+        <div id="option-bar">
+          <div id="option-toggle">
+            <a id="thumb-down"><a/>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+            <a id="thumb-up"></a>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="survey" id="survey-intro">
+
+        <h2>Need help finding something new to read?</h2>
+
+        ~~ thumbnail ~~
+
+        <div id="option-bar">
+          <div id="option-toggle">
+            <a id="thumb-down"><a/>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+            <a id="thumb-up"></a>
+          </div>
+        </div>
+
+      </section>
+-->
     <main>
       <ul id="issues"></ul>
     </main>
@@ -42,32 +80,36 @@
         // describe a comic book issue,
         // this would be parsed JSON
         var details = {
-          title: "",
-          subtitle: "",
-          description: "",
-          snippet: "",
-          publishedDate: "",
-          publisher: "",
-          mature: "",
-          language: "",
-          isbn: "",
-          pageCount: 0,
-          thumbnailURL: "",
-          coverURL: ""
+          "title" : "Roarin' Rick's Rare Bit Fiends #22",
+          "subtitle" : null,
+          "description" : "The first new issue of RARE BIT FIENDS in 20 years! 52 pages of dream comics from the slinky subconscious of Rick Veitch, featuring \"The Art Of Mercurius\" and \"Subtleman Part 2\".",
+          "snippet" : "The first new issue of RARE BIT FIENDS in 20 years! 52 pages of dream comics from the slinky subconscious of Rick Veitch, featuring &quot;The Art Of Mercurius&quot; and &quot;Subtleman Part 2&quot;.",
+          "publisher" : "Createspace Independent Publishing Platform",
+          "publishedDate" : "2016-12-03",
+          "language" : "en",
+          "isbn" : "9781540679789",
+          "pageCount" : 52,
+          "thumbnailUrl" : "http://books.google.com/books/content?id=Gbv7MAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+          "coverUrl" : null,
+          "mature" : 0
         };
         // create a new comic book issue entity
         var issue = window.bmr.create(details);
         // render the HTML for mobile devices
-        // other options: "thumbnail"
-        // eventually: "large" or "desktop" templates
-        var node = issue.render("mobile");
-        // the issue element is wrapped as a list item
-        var item = document.createElement("li");
+        // the first param is the name of an HTML template:
+        // "thumbnail", "mobile", "rating", possibly others
+        // the second param is optional and defaults to "div",
+        // in this case the HTML template is rendered inside a list-item element,
+        // suitable for appending to the "issues" unordered list element in the DOM.
+        var comicBookIssue = issue.render("mobile", "li");
+        // we also want to render the additional thumbs-up/down rating element
+        var rating = issue.render("rating");
         // identify the container for issue list items
         var list = document.getElementById("issues");
+        // compose the rating and issue elements
+        comicBookIssue.appendChild(rating);
         // append this issue to the DOM
-        item.appendChild(node);
-        list.appendChild(item);
+        list.appendChild(comicBookIssue);
       })();
     </script>
   </body>

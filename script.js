@@ -59,7 +59,7 @@ var schema = [
   },
   {
     name: "mature",
-    type: String
+    type: Number
   },
   {
     name: "language",
@@ -100,7 +100,7 @@ Object.defineProperty(window, "bmr", {
  * @param {string} details.snippet - publisher's promotional copy.
  * @param {string} details.publishedDate - the date published.
  * @param {string} details.publisher - the publisher.
- * @param {string} details.mature - flags issues containing explicit content.
+ * @param {number} details.mature - flags issues containing explicit content.
  * @param {string} details.language - the language.
  * @param {string} details.isbn - the isbn code.
  * @param {number} details.pageCount - the number of pages.
@@ -117,7 +117,12 @@ function Issue (details) {
     // is this property in details
     if (Object.prototype.hasOwnProperty.call(details, model.name)) {
       // primitive type checking
-      if (details[model.name].constructor !== model.type) {
+      if (
+        // an abstract equality comparison (== instead of ===,)
+        // does not discriminate between undefined and null types
+        details[model.name] != null &&
+        details[model.name].constructor !== model.type
+      ) {
         throw new TypeError("property " + model.name + " must be of type " + model.type.name);
       }
     } else if (model.required) {
@@ -131,41 +136,59 @@ function Issue (details) {
   }
 }
 
-// define a templates library for the Issue constructor
+// define a templates library for the Issue class
 Object.defineProperty(Issue, "templates", {
   value: {
     /**
-     * returns the HTML for a thumbs-up/down rating element
+     * returns the HTML for a thumbs-up/down rating
+     * note that the isbn can be used to query issue ratings in the DOM
      */
     rating: function (props) {
+      var isbn = props.isbn;
       return "\
-        <div></div>
-      ";
-    },
-    /**
-     * returns the HTML for a thumbnail element
-     */
-    thumbnail: function (props) {
-      return "\
-        <article class=\"thumbnail\">\
-          <img src=\"" + props.thumbnailURL + "\" alt=\"a thumbnail image for " + props.title + "\" \\>\
+        <article class=\"thumbs-rating\">\
+          <form>\
+            <label class=\"thumbs-up\" class=\"hidden\" for=\"" + isbn + "-yes\">\
+              <input  type=\"radio\" id=\"" + isbn + "-yes\" name=\"" + isbn + "\" value=\"yes\">\
+            </label>\
+            <label class=\"hidden\" for=\"" + isbn + "-no\">\
+              <input class=\"thumbs-down\" type=\"radio\" id=\"" + isbn + "-no\" name=\"" + isbn + "\" value=\"no\">\
+            </label>\
+          </form>\
         </article>\
       ";
     },
     /**
-     * returns the HTML for a mobile-first comic book issue element
+     * returns the HTML for a thumbnail image of the issue
+     */
+    thumbnail: function (props) {
+      return "\
+        <article class=\"thumbnail\">\
+          <section class=\"cover\">\
+            <img src=\"" + props.thumbnailURL + "\" alt=\"a thumbnail image for " + props.title + "\" \\>\
+          </section>\
+          <footer>\
+            <a href=\"" + props.thumbnailURL + "\">image source: grand comic database</a>\
+          </footer>\
+        </article>\
+      ";
+    },
+    /**
+     * returns the HTML for a mobile-first comic book issue
      */
     mobile: function (props) {
       return "\
         <article class=\"issue\">\
           <header>\
-            <a class=\"title\">" + props.title + "</a>\
+            <h2 class=\"title\">" + props.title + "</h2>\
             <p class=\"subtitle\">" + props.subtitle + "</p>\
           </header>\
           <section class=\"cover\">\
+            <h3 class=\"hidden\">cover image</h3>\
             <img src=\"" + props.coverURL + "\" alt=\"a cover image for " + props.title + "\" \\>\
           </section>\
           <section class=\"details\">\
+            <h3 class=\"hidden\">details</h3>\
             <p class=\"description\">" + props.description + "</p>\
             <p class=\"snippet\">" + props.snippet + "</p>\
             <p class=\"publishedDate\">" + props.publishedDate + "</p>\
@@ -189,9 +212,9 @@ Object.defineProperties(Issue.prototype, {
   render: {
     /**
      * returns different DOM nodes.
-     * @param{string} template - one of the following: "mobile", "thumbnail"
+     * @param{string} template - one of the following: "mobile", "thumbnail", "rating"
      */
-    value: function render (templateName) {
+    value: function render (templateName, tagName = "div") {
       // get an accessor for props set at instantiation time
       var props = this.props;
       // inject the props into a template for the component
@@ -203,14 +226,14 @@ Object.defineProperties(Issue.prototype, {
         throw new Error("Unknown template: " + templateName + ". Accepted: " + Object.keys(Issue.templates).join(", "));
       }
       // wrap the retun in an IIFE so we are isolating the DOM process
-      return (function (html = "") {
+      return (function (html, tag) {
         // create a DOM node, this could be a custom element in the future
-        const el = document.createElement("div");
+        const el = document.createElement(tag);
         // should sanitize the html string before we ask the DOM to parse it
         el.innerHTML = html;
         // return the element
         return el;
-      })(template);
+      })(template, tagName);
     }
   }
 });
