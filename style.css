@@ -13,14 +13,16 @@ https://dribbble.com/shots/7164639-Interactive-restaurant-recommendations-app
   --foreground:#DBDED8;
   --background-2:#000000;
   --highlight:#D6392E;
-  --header-height: 2.6em;
-  --max-width: 600px;
+  --header-height: 2.625em;
+  --max-width: 640px;
 }
 
 body {
-  display: block;
   background: var(--background);
-  font-size: .8em;
+  font-size: 16px;
+  color: var(--foreground);
+  font-family: 'helvetica-neu', sans-serif;  
+  font-weight: 400;
   max-width: var(--max-width);
   min-width: 320px;
   margin: auto;
@@ -32,55 +34,33 @@ body {
   left: -9999px;
 }
 
-h1 {
+header {
+  padding: 1em 0 0 2em;
+  overflow: auto;
+}
+
+header div.page-title {
+    width: calc(100% - 12em);
+}
+
+header h1 {
+  margin: 0;
+  letter-spacing: 0.0875em;
+  font-weight: 400;
+  text-shadow: 0.125em 0.125em 0.0625em var(--background-2);
   color: var(--foreground);
   font-size: var(--header-height);
   font-family: 'Bangers', cursive;
 }
 
-header ul {
-  margin: 0;
-}
-
-#search, #recommendations {
- background-size: 100%;
- height: var(--header-height);
- width: var(--header-height);
- display: block;
-}
-
-#search {
-  background-image: url("./assets/icons/search-line.png");
-}
-
-#recommendations {
-  background-image: url(/assets/icons/star-fill.png);
-}
-
-header {
-  padding: 1em 0 0 20px;
-  overflow: auto;
-}
-
-header div {
-    width: calc(100% - 12em);
-}
-
-header div h1 {
-  margin: 0;
-  letter-spacing: .08em;
-  font-weight: 400;
-  text-shadow: 5px 8px 3px black;
-}
-
 header nav {
-  display: inline-block;
   float: right;
 }
 
 header ul {
+  margin: 0;
+  padding: 0 1em;
   list-style-type: none;
-  padding: 0 10px;
 }
 
 header ul::after {
@@ -89,7 +69,7 @@ header ul::after {
 
 header li {
   float: right;
-  margin: 0 10px;
+  margin: 0 1em;
 }
 
 header > * {
@@ -106,107 +86,30 @@ main {
   min-height: 5em;
 }
 
-.survey {
-  padding: .8em;
-  text-align: center;
+article section, article footer {
+  padding: 1em 0 2em;
 }
 
-.survey h2 {
-  display: inline-block;
-  background-color: var(--foreground);
-  color: var(--background);
-  padding: .8em;
-  border-radius: 20px;
-  font-family: 'helvetica-neu', sans-serif;  
-  font-weight: 400;
-  font-size: 1em;
-  width: fit-content;
-  padding: 1em 2em;
-  margin-bottom: 1.5em;
-}
-
-#survey-issue .option {
-  display: flex;
-  justify-content: space-between;
-}
-
-#survey-issue #option-details { 
-  flex: 0 0 40%; 
-}
-
-#survey-issue #option-details p {
-  color: white;
-  font-family: 'helvetica-neu', sans-serif;
-  font-weight: 400;
-  font-size: 1em;
-  padding: 0 1em;
-}
-
-#option-image img {
-  min-width: 150px;
-  width: 100%;
-}
-
-#survey-issue #option-image {
-  text-align: left;
-  flex: 0 0 60%; 
-}
-
-#option-description {
-  text-align: left;
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical; */
-}
-
-/* Survey Selection Bar */
-#option-image a {
-  padding: .5em;
-  display: block;
+p.description {
   overflow: hidden;
-  color: var(--foreground);
-  font-size: .8em;
-  font-family: 'helvetica-neu', sans-serif;
-  text-decoration: none;
-  text-align: center;
-}
-
-#option-image a:visited {
-  color: var(--highlight);
-}
-
-#option-bar {
-  bottom: 0;
-  width: 100%;
-  position: fixed;
-  max-width: var(--max-width);
-  padding-right: .8em;
-}
-
-#option-toggle {
-  padding-right: 1.6em;
-  display: flex;
-  justify-content: space-between;
-}
-
-#option-toggle * {
-  display: block;
-}
-
-#option-toggle > a {
-  display: inline-block;
-}
-
-#option-toggle::after {
-  clear: both;
+  white-space: nowrap;
+  text-overflow: ellipsis ellipsis;
 }
 
 /* ratings */
 
-article.thumbs-rating form input[type="radio"] {
-  display: ;
+form.thumbs-rating label {
+  display: inline-block;
+}
+
+form.thumbs-rating fieldset {
+  padding: 1em 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+form.thumbs-rating fieldset::after {
+  clear: both;
 }
 
 .thumbs-up, .thumbs-down {
@@ -229,4 +132,3 @@ article.thumbs-rating form input[type="radio"] {
 
 
 /* mobile */
-

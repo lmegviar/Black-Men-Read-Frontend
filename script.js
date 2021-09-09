@@ -6,6 +6,15 @@
   function identity (a) {
     return a;
   }
+  /**
+   * return consistent DOM-formatted strings
+   * (removing escaped characters like &quot;)
+   */
+  function cleanStr (s) {
+    var e = document.createElement('div');
+    e.innerHTML = s;
+    return e.textContent;
+  }
 /*
 
 we'll expect an array of comic book issues.
@@ -35,11 +44,13 @@ var schema = [
   },
   {
     name: "description",
-    type: String
+    type: String,
+    transform: cleanStr
   },
   {
     name: "snippet",
-    type: String
+    type: String,
+    transform: cleanStr
   },
   {
     name: "publishedDate",
@@ -74,11 +85,11 @@ var schema = [
     type: Number
   },
   {
-    name: "thumbnailURL",
+    name: "thumbnailUrl",
     type: String
   },
   {
-    name: "coverURL",
+    name: "coverUrl",
     type: String
   }
 ];
@@ -146,16 +157,17 @@ Object.defineProperty(Issue, "templates", {
     rating: function (props) {
       var isbn = props.isbn;
       return "\
-        <article class=\"thumbs-rating\">\
-          <form>\
-            <label class=\"thumbs-up\" class=\"hidden\" for=\"" + isbn + "-yes\">\
-              <input  type=\"radio\" id=\"" + isbn + "-yes\" name=\"" + isbn + "\" value=\"yes\">\
+        <form class=\"thumbs-rating\">\
+          <fieldset>\
+            <legend>Would you read this book?</legend>\
+            <label class=\"thumbs-up\" for=\"" + isbn + "-yes\">\
+              <input class=\"hidden\" type=\"radio\" id=\"" + isbn + "-yes\" name=\"" + isbn + "\" value=\"yes\">\
             </label>\
-            <label class=\"hidden\" for=\"" + isbn + "-no\">\
-              <input class=\"thumbs-down\" type=\"radio\" id=\"" + isbn + "-no\" name=\"" + isbn + "\" value=\"no\">\
+            <label class=\"thumbs-down\" for=\"" + isbn + "-no\">\
+              <input class=\"hidden\" type=\"radio\" id=\"" + isbn + "-no\" name=\"" + isbn + "\" value=\"no\">\
             </label>\
-          </form>\
-        </article>\
+          </fieldset>\
+        </form>\
       ";
     },
     /**
@@ -165,42 +177,54 @@ Object.defineProperty(Issue, "templates", {
       return "\
         <article class=\"thumbnail\">\
           <section class=\"cover\">\
-            <img src=\"" + props.thumbnailURL + "\" alt=\"a thumbnail image for " + props.title + "\" \\>\
+            <img src=\"" + props.thumbnailUrl + "\" alt=\"a thumbnail image for " + props.title + "\">\
           </section>\
           <footer>\
-            <a href=\"" + props.thumbnailURL + "\">image source: grand comic database</a>\
+            <a href=\"" + props.thumbnailUrl + "\">image source: grand comic database</a>\
           </footer>\
         </article>\
       ";
     },
     /**
-     * returns the HTML for a mobile-first comic book issue
+     * returns the HTML for a comic book issue
      */
-    mobile: function (props) {
+    details: function (props) {
+      var image = (function (cover, thumbnail) {
+        if (cover == false) {
+          if (thumbnail == false) {
+            return "a-placeholder-image-url";
+          }
+          return thumbnail;
+        }
+        return cover;
+      })(props.coverUrl, props.thumbnailUrl);
       return "\
-        <article class=\"issue\">\
-          <header>\
+        <article class=\"container mx-auto p-4\">\
+          <header class=\"block bg-gray-400 px-4 py-2\">\
             <h2 class=\"title\">" + props.title + "</h2>\
             <p class=\"subtitle\">" + props.subtitle + "</p>\
           </header>\
-          <section class=\"cover\">\
-            <h3 class=\"hidden\">cover image</h3>\
-            <img src=\"" + props.coverURL + "\" alt=\"a cover image for " + props.title + "\" \\>\
-          </section>\
-          <section class=\"details\">\
-            <h3 class=\"hidden\">details</h3>\
-            <p class=\"description\">" + props.description + "</p>\
-            <p class=\"snippet\">" + props.snippet + "</p>\
-            <p class=\"publishedDate\">" + props.publishedDate + "</p>\
-            <p class=\"publisher\">" + props.publisher + "</p>\
-            <p class=\"mature\">" + props.mature + "</p>\
-            <p class=\"language\">" + props.language + "</p>\
-            <p class=\"isbn\">" + props.isbn + "</p>\
-            <p class=\"pageCount\">" + props.pageCount + "</p>\
-          </section>\
-          <footer>\
-            <a href=\"" + props.coverURL + "\">image source: grand comic database</a>\
-          </footer>\
+          <div class=\"flex mt-2\">\
+            <section class=\"flex-1 block bg-gray-400 px-4 py-2\">\
+              <h3 class=\"hidden\">cover image</h3>\
+              <img class=\"object-cover h-auto w-full\" src=\"" + image + "\" alt=\"a cover image for " + props.title + "\" >\
+              <a href=\"" + image + "\">image source: grand comic database</a>\
+            </section>\
+            <section class=\"flex-1 block bg-gray-400 px-4 py-2\">\
+              <h3 class=\"hidden\">details</h3>\
+              <p class=\"description\">" + props.description + "</p>\
+              " + (
+                props.snippet === props.description ||
+                "<p class=\"snippet\">" + props.snippet + "</p>"
+              )  + "\
+              <p class=\"publishedDate\">" + props.publishedDate + "</p>\
+              <p class=\"publisher\">" + props.publisher + "</p>\
+              <p class=\"mature\">" + props.mature + "</p>\
+              <p class=\"language\">" + props.language + "</p>\
+              <p class=\"isbn\">" + props.isbn + "</p>\
+              <p class=\"pageCount\">" + props.pageCount + "</p>\
+            </section>\
+          </div>\
         </article>\
       ";
     }
@@ -244,6 +268,18 @@ Object.defineProperty(public, "create", {
     return new Issue(details);
   }
 });
+
+// // utils
+// Object.defineProperty(public, "fetchCoverFromGCD", {
+//   value: function (gcd_id) {
+//     fetch('https://www.comics.org/issue/'+ gcd_id)
+//     .then((res) => {
+//       console.log(res);
+//       cover_regex = "https://files1\.comics\.org//img/gcd/covers_by_id/.*\.jpg"
+//       // re.search(cover_regex, req, re.M)
+//       // cover_url = re.sub("\/w\d{3}\/", "/w400/", cover_url)
+//     })
+// });
 
 // close IIFE
 })();

@@ -1,0 +1,26 @@
+/* From https://fredthewebguy.me/css-tuts/how-to-create-angled-divs-with-css/ */
+
+.slanted:before, .slanted:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  top: 0;
+  transform-origin: right top;
+  transform: skewY(-3deg);
+}
+
+.slanted:after {
+  bottom: 0;
+  transform-origin: right bottom;
+  transform: skewY(3deg);
+}
+
+/* displays the content inside, as these settings in the parent breaks the effect */
+.slanted div {
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 1.5;
+}

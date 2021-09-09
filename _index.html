@@ -5,41 +5,30 @@
 
 <head>
 	<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width">
 	<title>Black Book</title>
-	<!-- <link href="normalize.css" rel="stylesheet" /> -->
-  <link href="tailwind.min.css" rel="stylesheet" />
-	<!-- <link href="style.css" rel="stylesheet" /> -->
+	<link href="normalize.css" rel="stylesheet" type="text/css" />
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link href="toggle.css" rel="stylesheet" type="text/css" />
   <script src="//polyfill.io/v3/polyfill.min.js?features=Promise%2Cfetch"></script>
-  <style>
-    .search {
-      background-image: url("./assets/icons/search-line.png");
-    }
-    .recommendations {
-      background-image: url(/assets/icons/star-fill.png);
-    }
-    .search, .recommendations {
-      background-size: 100%;
-      height: 48px;
-      width: 48px;
-    }
-  </style>
 </head>
 
-<body class="mt-48">
+<body>
 
-	<header class="fixed top-0 right-0 left-0 flex p-4 bg-black">
-		<h1 class="flex-1 text-gray-700">Black Book</h1>
-		<nav class="flex-1 text-right">
+	<header>
+		<div>
+			<h1>Black Book</h1>
+		</div>
+		<nav>
 			<ul>
-				<li class="inline-block mx-2 search">
+				<li>
 					<label hidden for="search">"Go to search"</label>
-          <a id="search"></a>
-        </li>
-        <li class="inline-block mx-2 recommendations">
-          <label hidden for="recommendations">"Go to recommendations"</label>
-          <a id="recommendations"></a>
-        </li>
+            <a id="search"></a>
+          </li>
+          <li>
+            <label hidden for="recommendations">"Go to recommendations"</label>
+            <a id="recommendations"></a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -50,7 +39,7 @@
 
     <script src="script.js"></script>
     <script>
-      // (function () {
+      (function () {
         // describe a comic book issue,
         // this would be parsed JSON
         var details = {
@@ -65,12 +54,17 @@
           "pageCount" : 52,
           "thumbnailUrl" : "http://books.google.com/books/content?id=Gbv7MAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
           "coverUrl" : null,
-          "mature" : 0
+          "mature" : 0,
         };
         // create a new comic book issue entity
         var issue = window.bmr.create(details);
-        // render HTML for a "details" view inside a list item element.
-        var comicBookIssue = issue.render("details", "li");
+        // render the HTML for mobile devices
+        // the first param is the name of an HTML template:
+        // "thumbnail", "mobile", "rating", possibly others
+        // the second param is optional and defaults to "div",
+        // in this case the HTML template is rendered inside a list-item element,
+        // suitable for appending to the "issues" unordered list element in the DOM.
+        var comicBookIssue = issue.render("mobile", "li");
         // we also want to render the additional thumbs-up/down rating element
         var rating = issue.render("rating");
         // identify the container for issue list items
@@ -79,7 +73,7 @@
         comicBookIssue.appendChild(rating);
         // append this issue to the DOM
         list.appendChild(comicBookIssue);
-      // })();
+      })();
     </script>
   </body>
 </html>
