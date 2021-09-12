@@ -12,31 +12,65 @@
 	<!-- <link href="style.css" rel="stylesheet" /> -->
   <script src="//polyfill.io/v3/polyfill.min.js?features=Promise%2Cfetch"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+    .fonted {
+      font-family: 'Righteous', sans-serif;
+      font-weight: 400;
+    }
+
+    #gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      min-height: 100%;
+      z-index: -1;
+      background: radial-gradient(black 15%, transparent 16%) 0 0,
+        radial-gradient(black 15%, transparent 16%) 8px 8px,
+        radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+        radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+      background-color:#1A202C;
+      background-size:16px 16px;
+    }
+    .body-gradient {
+      background-color: #EDF2F7;
+      background-image: linear-gradient(transparent 60%, #F7FAFC 60%);
+      background-size: 3px 3px;
+    }
+    .icon {
+      background-size: 100%;
+      height: 48px;
+      width: 48px;
+    }
     .search {
       background-image: url("./assets/icons/search-line.png");
     }
     .recommendations {
       background-image: url(/assets/icons/star-fill.png);
     }
-    .search, .recommendations {
-      background-size: 100%;
-      height: 48px;
-      width: 48px;
+    .thumbs-down {
+      background-image: url("./assets/icons/thumb-down-fill.png");
+    }
+    .thumbs-up {
+      background-image: url("./assets/icons/thumb-up-fill.png");
     }
   </style>
 </head>
 
-<body class="mt-48">
+<body class="mt-32 bg-black">
+  <div id="gradient"></div>
 
-	<header class="fixed top-0 right-0 left-0 flex p-4 bg-black">
-		<h1 class="flex-1 text-gray-700">Black Book</h1>
+	<header class="fixed top-0 right-0 left-0 flex p-4 border-b-2 border-gray-500 bg-gray-900">
+		<h1 class="flex-1 text-gray-300 text-4xl fonted">Black Book</h1>
 		<nav class="flex-1 text-right">
 			<ul>
-				<li class="inline-block mx-2 search">
+				<li class="inline-block mx-2 icon search">
 					<label hidden for="search">"Go to search"</label>
           <a id="search"></a>
         </li>
-        <li class="inline-block mx-2 recommendations">
+        <li class="inline-block mx-2 icon recommendations">
           <label hidden for="recommendations">"Go to recommendations"</label>
           <a id="recommendations"></a>
         </li>
@@ -50,7 +84,7 @@
 
     <script src="script.js"></script>
     <script>
-      // (function () {
+      (function () {
         // describe a comic book issue,
         // this would be parsed JSON
         var details = {
@@ -79,7 +113,7 @@
         comicBookIssue.appendChild(rating);
         // append this issue to the DOM
         list.appendChild(comicBookIssue);
-      // })();
+      })();
     </script>
   </body>
 </html>

@@ -157,15 +157,19 @@ Object.defineProperty(Issue, "templates", {
     rating: function (props) {
       var isbn = props.isbn;
       return "\
-        <form class=\"thumbs-rating\">\
-          <fieldset>\
-            <legend>Would you read this book?</legend>\
-            <label class=\"thumbs-up\" for=\"" + isbn + "-yes\">\
-              <input class=\"hidden\" type=\"radio\" id=\"" + isbn + "-yes\" name=\"" + isbn + "\" value=\"yes\">\
-            </label>\
-            <label class=\"thumbs-down\" for=\"" + isbn + "-no\">\
-              <input class=\"hidden\" type=\"radio\" id=\"" + isbn + "-no\" name=\"" + isbn + "\" value=\"no\">\
-            </label>\
+        <form class=\"container mx-auto mt-2 pb-4 bg-gray-100 shadow-xl max-w-xl body-gradient\">\
+          <fieldset class=\"flex\">\
+            <legend class=\"flex-none mb-4 p-4 w-full bg-gray-800 text-gray-300\">Would you read this book?</legend>\
+            <div class=\"flex-1\">\
+              <label class=\"block mx-auto icon thumbs-up\" for=\"" + isbn + "-yes\">\
+                <input class=\"invisible h-0\" type=\"radio\" id=\"" + isbn + "-yes\" name=\"" + isbn + "\" value=\"yes\">\
+              </label>\
+            </div>\
+            <div class=\"flex-1\">\
+              <label class=\"block mx-auto icon thumbs-down\" for=\"" + isbn + "-no\">\
+                <input class=\"invisible h-0\" type=\"radio\" id=\"" + isbn + "-no\" name=\"" + isbn + "\" value=\"no\">\
+              </label>\
+            </div>\
           </fieldset>\
         </form>\
       ";
@@ -199,30 +203,24 @@ Object.defineProperty(Issue, "templates", {
         return cover;
       })(props.coverUrl, props.thumbnailUrl);
       return "\
-        <article class=\"container mx-auto p-4\">\
-          <header class=\"block bg-gray-400 px-4 py-2\">\
-            <h2 class=\"title\">" + props.title + "</h2>\
-            <p class=\"subtitle\">" + props.subtitle + "</p>\
+        <article class=\"container mx-auto shadow-xl max-w-xl\">\
+          <header class=\"block mb-2\">\
+            <h2 class=\"text-2xl text-gray-200 fonted\">" + props.title + "</h2>\
+            <p class=\"text-lg text-gray-200\">" + props.subtitle + "</p>\
           </header>\
-          <div class=\"flex mt-2\">\
-            <section class=\"flex-1 block bg-gray-400 px-4 py-2\">\
-              <h3 class=\"hidden\">cover image</h3>\
-              <img class=\"object-cover h-auto w-full\" src=\"" + image + "\" alt=\"a cover image for " + props.title + "\" >\
-              <a href=\"" + image + "\">image source: grand comic database</a>\
+          <div class=\"flex\">\
+            <section class=\"flex-1 block\">\
+              <h3 class=\"invisible h-0\">cover image</h3>\
+              <img class=\"object-cover h-full w-full\" src=\"" + image + "\" alt=\"a cover image for " + props.title + "\" >\
             </section>\
-            <section class=\"flex-1 block bg-gray-400 px-4 py-2\">\
-              <h3 class=\"hidden\">details</h3>\
-              <p class=\"description\">" + props.description + "</p>\
-              " + (
-                props.snippet === props.description ||
-                "<p class=\"snippet\">" + props.snippet + "</p>"
-              )  + "\
-              <p class=\"publishedDate\">" + props.publishedDate + "</p>\
-              <p class=\"publisher\">" + props.publisher + "</p>\
-              <p class=\"mature\">" + props.mature + "</p>\
-              <p class=\"language\">" + props.language + "</p>\
-              <p class=\"isbn\">" + props.isbn + "</p>\
-              <p class=\"pageCount\">" + props.pageCount + "</p>\
+            <section class=\"flex-1 block bg-gray-100 p-4 relative body-gradient\">\
+              <h3 class=\"invisible h-0\">details</h3>\
+              <p class=\"\">" + props.description + "</p>\
+              " + (props.snippet !== props.description ? ("<p class=\"snippet\">" + props.snippet + "</p>") : "")  + "\
+              <p class=\"mt-2 text-gray-700\">Published " + (props.publishedDate && new Date(props.publishedDate).getFullYear()) + (props.publisher && (" by " + props.publisher)) + ".</p>\
+              <p class=\"text-gray-700\">" + props.pageCount + "pages.</p>\
+              <p class=\"mt-2 text-gray-700\">" + (props.mature && "For mature readers.") + "</p>\
+              <a class=\"absolute bottom-0 text-sm pb-2 text-blue-500 hover:underline\" href=\"" + image + "\">image source: grand comic database</a>\
             </section>\
           </div>\
         </article>\
